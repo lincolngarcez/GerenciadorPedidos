@@ -33,6 +33,7 @@ public class Principal {
 
         Categoria categoriaEletronicos = new Categoria("Eletrônicos");
         Categoria categoriaLivros = new Categoria("Livros");
+        categoriaRepository.saveAll(List.of(categoriaEletronicos, categoriaLivros));
 
         Fornecedor fornecedorTech = new Fornecedor("Tech Supplier");
         Fornecedor fornecedorLivros = new Fornecedor("Livraria Global");
@@ -54,9 +55,8 @@ public class Principal {
         categoriaEletronicos.setProdutos(List.of(produto1, produto2));
         categoriaLivros.setProdutos(List.of(produto3, produto4));
 
-        categoriaRepository.saveAll(List.of(categoriaEletronicos, categoriaLivros));
+//        categoriaRepository.saveAll(List.of(categoriaEletronicos, categoriaLivros));
 
-        // Testando consultas e verificando os relacionamentos
         System.out.println("Produtos na categoria Eletrônicos:");
         categoriaRepository.findById(1L).ifPresent(categoria ->
                 categoria.getProdutos().forEach(produto ->

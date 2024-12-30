@@ -1,8 +1,6 @@
 package br.com.alura.gerenciadorpedidos.model;
 
 import jakarta.persistence.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,7 +17,6 @@ public class Categoria {
     public Categoria() {}
 
     public Categoria(String nome) {
-        //this.id = id;
         this.nome = nome;
     }
 
