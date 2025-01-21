@@ -36,4 +36,13 @@ public class Categoria {
         produtos.forEach(p -> p.setCategoria(this));
         this.produtos = produtos;
     }
+
+    @Override
+    public String toString() {
+        return "Categoria{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", produtos=" + produtos +
+                '}';
+    }
 }

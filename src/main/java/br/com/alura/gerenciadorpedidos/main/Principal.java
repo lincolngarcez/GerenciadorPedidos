@@ -1,6 +1,7 @@
 package br.com.alura.gerenciadorpedidos.main;
 
 import br.com.alura.gerenciadorpedidos.model.Categoria;
+import br.com.alura.gerenciadorpedidos.model.Pedido;
 import br.com.alura.gerenciadorpedidos.model.Produto;
 import br.com.alura.gerenciadorpedidos.repository.CategoriaRepository;
 import br.com.alura.gerenciadorpedidos.repository.FornecedorRepository;
@@ -55,17 +56,93 @@ public class Principal {
 
 //        listaProdutosEletronicos();
 //        listaDePedidos();
-//        listaDeProdutosEFornecedores();
-        buscaProdutoPeloNome();
+        listaDeProdutosEFornecedores();
+        //buscaProdutoPorNomeExato();
+        //buscaProdutoPorNomeParcial();
+        //buscaProdutoPorCategoria();
+        //buscaProdutoPorPrecoMaiorQue();
+        //buscaProdutoPorPrecoMenorQue();
+        //buscaPedidoComDataEntregaNula();
+        //buscaPedidoComDataEntregaNaoNula();
+        //buscaProdutoPorCategoriaOrdemPrecoCrescente();
+        //buscaProdutoPorCategoriaOrdemPrecoDecrescente();
+        //contarProdutoPorCategoria();
+        contarProdutoPrecoMaiorQue();
+    }
 
-        System.out.println("Busque o produto por categoria: ");
-        String categoria = leitura.nextLine();
-        List<Produto> produtos = produtoRepository.findByCategoriaContainingIgnoreCase(categoria);
+    private void contarProdutoPrecoMaiorQue() {
+        System.out.println("Contagem do produto por preço maior que: ");
+        Double precoPesquisado = leitura.nextDouble();
+        Long quantidadeProduto = produtoRepository.countByPrecoGreaterThanEqual(precoPesquisado);
+        System.out.println("Total de Produtos: " + quantidadeProduto);
+    }
+
+    private void contarProdutoPorCategoria() {
+        System.out.println("Contagem do produto por categoria: ");
+        String categoriaPesquisada = leitura.nextLine();
+        Categoria categoria = categoriaRepository.findByNome(categoriaPesquisada);
+        Long quantidadeProduto = produtoRepository.countByCategoria(categoria);
+        System.out.println("Total de Produtos: " + quantidadeProduto);
+    }
+
+    private void buscaProdutoPorCategoriaOrdemPrecoDecrescente() {
+        System.out.println("Busque o produto por categoria (decrescente): ");
+        String categoriaPesquisada = leitura.nextLine();
+        Categoria categoria = categoriaRepository.findByNome(categoriaPesquisada);
+        List<Produto> produtosPorCategoria = produtoRepository.findByCategoriaOrderByPrecoDesc(categoria);
+        produtosPorCategoria.forEach(p -> System.out.println(p.toString()));
+    }
+
+    private void buscaProdutoPorCategoriaOrdemPrecoCrescente() {
+        System.out.println("Busque o produto por categoria (crescente): ");
+        String categoriaPesquisada = leitura.nextLine();
+        Categoria categoria = categoriaRepository.findByNome(categoriaPesquisada);
+        List<Produto> produtosPorCategoria = produtoRepository.findByCategoriaOrderByPrecoAsc(categoria);
+        produtosPorCategoria.forEach(p -> System.out.println(p.toString()));
+    }
+
+    private void buscaPedidoComDataEntregaNaoNula() {
+        System.out.println("Pedidos com data de entrega não nula:");
+        List<Pedido> pedidos = pedidoRepository.findByDataIsNotNull();
+        pedidos.forEach(p -> System.out.println(p.toString()));
+    }
+
+    private void buscaPedidoComDataEntregaNula() {
+        System.out.println("Pedidos com data de entrega nula:");
+        List<Pedido> pedidos = pedidoRepository.findByDataIsNull();
+        pedidos.forEach(p -> System.out.println(p.toString()));
+    }
+
+    private void buscaProdutoPorPrecoMenorQue() {
+        System.out.println("Produtos com preço menores que:");
+        Double precoPesquisado = leitura.nextDouble();
+        List<Produto> produtos = produtoRepository.findByPrecoLessThanEqual(precoPesquisado);
         produtos.forEach(p -> System.out.println(p.toString()));
     }
 
-    private void buscaProdutoPeloNome() {
-        System.out.println("Busca produto pelo nome:");
+    private void buscaProdutoPorPrecoMaiorQue() {
+        System.out.println("Produtos com preço maiores que:");
+        Double precoPesquisado = leitura.nextDouble();
+        List<Produto> produtos = produtoRepository.findByPrecoGreaterThanEqual(precoPesquisado);
+        produtos.forEach(p -> System.out.println(p.toString()));
+    }
+
+    private void buscaProdutoPorCategoria() {
+        System.out.println("Busque o produto por categoria: ");
+        String categoriaPesquisada = leitura.nextLine();
+        List<Categoria> produtosPorCategoria = categoriaRepository.findCategoriaByNomeContainingIgnoreCase(categoriaPesquisada);
+        produtosPorCategoria.forEach(p -> System.out.println(p.toString()));
+    }
+
+    private void buscaProdutoPorNomeExato() {
+        System.out.println("Busca produto pelo nome exato:");
+        String nomeProduto = leitura.nextLine();
+        List<Produto> produtos = produtoRepository.findByNomeIgnoreCase(nomeProduto);
+        produtos.forEach(p -> System.out.println(p.toString()));
+    }
+
+    private void buscaProdutoPorNomeParcial() {
+        System.out.println("Busca produto pelo nome parcial:");
         String nomeProduto = leitura.nextLine();
         List<Produto> produtos = produtoRepository.findByNomeContainingIgnoreCase(nomeProduto);
         produtos.forEach(p -> System.out.println(p.toString()));

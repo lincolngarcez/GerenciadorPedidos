@@ -39,4 +39,13 @@ public class Pedido {
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
     }
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "id=" + id +
+                ", produtos=" + produtos +
+                ", data=" + data +
+                '}';
+    }
 }
